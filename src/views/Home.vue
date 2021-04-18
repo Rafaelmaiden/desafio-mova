@@ -40,8 +40,4 @@ export default {
 .home {
   padding: 100px;
 }
-
-ul  li {
-  margin-right: 53px !important;
-}
 </style>

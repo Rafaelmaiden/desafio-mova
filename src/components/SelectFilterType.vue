@@ -4,10 +4,11 @@
       label="Filtrar por"
       label-for="select">
       <b-form-select
+        @change="changeType(selected) "
         style="padding-left: 35px"
         id="select"
         v-model="selected">
-      <option :v-model="selected" disabled>
+        <option  disabled>
           Escolha uma opção
         </option>
         <option v-for="(types, index) in filterTypes" :key="index" :value="types">
@@ -19,7 +20,8 @@
 </template>
 
 <script>
-import { AXIOS } from '@/service'
+import { AXIOS } from '@/api'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -40,10 +42,20 @@ export default {
   },
 
   created () {
-    this.getData()
+    this.getTypeRegion()
   },
 
+  computed: mapState(['type']),
+
   methods: {
+    ...mapMutations(['changeType']),
+
+    getRegion () {
+      if (this.filterTypes.serve === 'region') {
+        this.selected = this.filterTypes
+      }
+    },
+
     async getData () {
       const resp = await AXIOS.get()
       // this.filter = resp#6D2080

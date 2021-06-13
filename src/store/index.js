@@ -1,38 +1,46 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { AXIOS } from '@/api/index.js'
+import { api } from '../services/axios'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    type: '',
-    filter: '',
-    countries: null
+    typeOfFilter: '',
+    textTypeFiltered: '',
+    filteredType: '',
+    allFlags: []
   },
 
   mutations: {
-    type (state, payload) {
-      state.type = payload
+    CHANGE_TYPE_OF_FILTER (state, payload) {
+      state.typeOfFilter = payload.type
+      state.textTypeFiltered = payload.textType
     },
-    filter (state, payload) {
-      state.filter = payload
+
+    ADD_ALL_FLAGS (state, payload) {
+      state.allFlags = payload
     },
-    countries (state, payload) {
-      state.countries = payload
+
+    CHANGING_FILTERED_TYPE (state, payload) {
+      state.filteredType = payload
     }
   },
 
   actions: {
-    async countries (context, endpoint) {
-      try {
-        const type = context.state.type.serve
-        const { filter } = context.state
-        const { data } = await AXIOS.get(endpoint || `/${type}/${filter}`)
+    async GET_FLAGS (context, payload) {
+      const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
+      const filteredFlags = []
 
-        context.commit('countries', data)
+      try {
+        const { data } = await api.get(params)
+
+        for (const i in data) {
+          filteredFlags.push(data[i].flag)
+        }
+        context.commit('ADD_ALL_FLAGS', filteredFlags)
       } catch (err) {
-        console.log(err)
+        console.error(err)
       }
     }
   },

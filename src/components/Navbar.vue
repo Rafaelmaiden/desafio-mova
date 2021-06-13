@@ -21,7 +21,8 @@ $border-button: #6D2080;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0px 0px 10px 0px #727272 !important;
+  box-shadow: 0px 4px 4px 0px #00000040 !important;
+  /* box-shadow: 0px 0px 10px 0px #727272 !important; */
   padding: 0 67px;
   min-height: 100px;
 }

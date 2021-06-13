@@ -4,87 +4,69 @@
       label="Filtrar por"
       label-for="select">
       <b-form-select
-        @change="changeType(selected) "
-        style="padding-left: 35px"
+        @change="changeType() "
         id="select"
-        v-model="selected">
-        <option  disabled>
-          Escolha uma opção
-        </option>
-        <option v-for="(types, index) in filterTypes" :key="index" :value="types">
-          {{ types.type }}
-        </option>
+        v-model="selectedFilter"
+        :options="filterTypes">
+        <template #first>
+          <b-form-select-option :value="null" disabled> Escolha uma opção </b-form-select-option>
+        </template>
       </b-form-select>
     </b-form-group>
   </div>
 </template>
 
 <script>
-import { AXIOS } from '@/api'
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   data () {
     return {
-      selected: 'Escolha uma opção',
+      selectedFilter: null,
       filterTypes: [
-        { type: 'País', value: 'name', serve: 'name' },
-        { type: 'Região', value: 'region', serve: 'region' },
-        { type: 'Capital', value: 'capital', serve: 'capital' },
-        { type: 'Língua', value: 'languages', serve: 'lang' },
-        {
-          code: 'Código de ligação',
-          endpoint: 'callingCodes',
-          service: 'callingCodes'
-        }
+        { text: 'Região', value: 'region' },
+        { text: 'Capital', value: 'capital' },
+        { text: 'Língua', value: 'language' },
+        { text: 'País', value: 'country' },
+        { text: 'Código de ligação', value: 'callingCode' }
       ]
     }
   },
 
   created () {
-    this.getTypeRegion()
   },
 
-  computed: mapState(['type']),
+  mounted () {
+  },
+
+  computed: {
+    ...mapState(['typeOfFilter'])
+  },
+
+  watch: {
+    selectedFilter: function () {
+      this.changeType()
+    }
+  },
 
   methods: {
-    ...mapMutations(['changeType']),
+    async changeType () {
+      let typeFiltered = ''
+      let textTypeFiltered = ''
 
-    getRegion () {
-      if (this.filterTypes.serve === 'region') {
-        this.selected = this.filterTypes
+      for (const valueType in this.filterTypes) {
+        if (this.selectedFilter === this.filterTypes[valueType].value) {
+          typeFiltered = this.filterTypes[valueType].value
+          textTypeFiltered = this.filterTypes[valueType].text
+        }
       }
-    },
 
-    async getData () {
-      const resp = await AXIOS.get()
-      // this.filter = resp#6D2080
-      console.log(resp)
+      await this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-$default-color: #6D2080;
-
-.custom-select {
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
-.custom-select:focus {
-  box-shadow: none !important;
-  border-color: $default-color;
-}
-
-.custom-select:active {
-  border-color: $default-color;
-}
-
-.custom-select:hover {
-  border-color: $default-color;
-}
 
 </style>

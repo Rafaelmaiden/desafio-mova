@@ -1,11 +1,11 @@
 <template>
   <div>
-    <b-button :disabled="!filter" @click="search()">PESQUISAR</b-button>
+    <b-button :disabled="!filteredType || !typeOfFilter" @click.prevent.stop="searchFlagsByType()">PESQUISAR</b-button>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -13,10 +13,13 @@ export default {
     }
   },
 
-  computed: mapState(['filter']),
+  computed: mapState(['typeOfFilter', 'filteredType']),
 
   methods: {
-    ...mapActions(['search'])
+
+    async searchFlagsByType () {
+      this.$store.dispatch('GET_FLAGS', { type: this.typeOfFilter, filtered: this.filteredType })
+    }
   }
 }
 
@@ -29,7 +32,7 @@ $border-button: #6D2080;
   background-color: $border-button;
   color: #fff;
   border-radius: 10px;
-  min-width: 134px;
+  min-width: 156px;
   min-height: 36px;
   font-size: 17px;
 }

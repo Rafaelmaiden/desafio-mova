@@ -1,1 +1,35 @@
-$border-button: #6D2080;
+$default-color: #6D2080;
+
+div label {
+  color: $default-color !important;
+  margin-bottom: -4px !important;
+  padding-left: 20px !important;
+  font-size: 15px;
+  font-family: Montserrat,"Helvetica Neue",Helvetica,Arial !important;
+}
+
+.custom-select, .form-control {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  padding-left: 35px !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  /* height: calc(1.5em + 0.75rem + 2px); */
+  height: calc(0.7em + 0.75rem + 2px) !important;
+}
+
+.custom-select:focus, .form-control:focus {
+  box-shadow: none !important;
+  border-color: $default-color !important;
+}
+
+.custom-select:active, .form-control:focus:active {
+  border-color: $default-color !important;
+}
+
+.custom-select:hover, .form-control:hover {
+  border-color: $default-color !important;
+}

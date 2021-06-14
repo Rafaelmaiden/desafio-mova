@@ -28,7 +28,7 @@ export default {
         { text: 'Capital', value: 'capital' },
         { text: 'Língua', value: 'language' },
         { text: 'País', value: 'country' },
-        { text: 'Código de ligação', value: 'callingCode' }
+        { text: 'Código de ligação', value: 'callingcode' }
       ]
     }
   },

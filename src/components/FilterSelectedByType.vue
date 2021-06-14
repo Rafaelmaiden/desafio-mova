@@ -11,14 +11,36 @@
         <template #first>
           <b-form-select-option selected :value="null" disabled> Escolha uma {{ textTypeFiltered }} </b-form-select-option>
         </template>
-        <b-form-select-option
-          v-show="this.typeOfFilter !== 'language'"
-          v-for="(type, ind) in optionsOfFilterType" :key="ind" > {{ type }}
-        </b-form-select-option>
-        <b-form-select-option
-          v-show="this.typeOfFilter === 'language'"
-          v-for="(lang, index) in languages" :key="index" :value="lang.iso639_1"> {{ lang.name }}
-        </b-form-select-option>
+        <template v-if="this.typeOfFilter === 'region'">>
+          <b-form-select-option
+            v-for="(region, index) in regions" :key="index" :value="region.value"> {{ region.text }}
+          </b-form-select-option>
+        </template>
+
+        <template v-if="this.typeOfFilter === 'capital'">>
+          <b-form-select-option
+            v-for="(capital, index) in capitals" :key="index" :value="capital"> {{ capital }}
+          </b-form-select-option>
+        </template>
+
+        <template v-if="this.typeOfFilter === 'language' || this.typeOfFilter === 'lang'">
+          <b-form-select-option
+            v-for="(lang, index) in languages" :key="index" :value="lang.iso639_1"> {{ lang.name }}
+          </b-form-select-option>
+        </template>
+
+        <template v-if="this.typeOfFilter === 'country' || this.typeOfFilter === 'name'">>
+          <b-form-select-option
+            v-for="(country, index) in countries" :key="index" :value="country"> {{ country }}
+          </b-form-select-option>
+        </template>
+
+        <template v-if="this.typeOfFilter === 'callingcode'">>
+          <b-form-select-option
+            v-for="(code, index) in callingCodes" :key="index" :value="code"> {{ code }}
+          </b-form-select-option>
+        </template>
+
       </b-form-select>
     </b-form-group>
 
@@ -32,16 +54,18 @@ export default {
   data () {
     return {
       filteredType: null,
-      optionsOfFilterType: [],
+      regions: [],
+      capitals: [],
       languages: [],
-      allCountries: [],
-      allFilteredCountries: [],
-      allCallingCodes: []
+      countries: [],
+      callingCodes: [],
+      allCountries: []
     }
   },
 
   mounted () {
     this.getCountries()
+    this.changeTypeFiltered()
   },
 
   computed: {
@@ -65,12 +89,18 @@ export default {
     },
 
     async changeTypeFiltered () {
+      if (this.typeOfFilter === 'language') {
+        this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'lang', textType: this.textTypeFiltered })
+      } else if (this.typeOfFilter === 'country') {
+        this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'name', textType: this.textTypeFiltered })
+      }
+
       await this.$store.commit('CHANGING_FILTERED_TYPE', this.filteredType)
     },
 
     async getFilters () {
       if (this.typeOfFilter === 'region') {
-        this.optionsOfFilterType = [
+        this.regions = [
           { text: 'Africa', value: 'africa' },
           { text: 'Americas', value: 'americas' },
           { text: 'Ásia', value: 'asia' },
@@ -79,11 +109,11 @@ export default {
         ]
       } else if (this.typeOfFilter === 'capital') {
         this.getAllCapitals()
-      } else if (this.typeOfFilter === 'language') {
+      } else if (this.typeOfFilter === 'language' || this.typeOfFilter === 'lang') {
         this.getAllLanguages()
-      } else if (this.typeOfFilter === 'country') {
+      } else if (this.typeOfFilter === 'country' || this.typeOfFilter === 'name') {
         this.getAllCountries()
-      } else if (this.typeOfFilter === 'callingCode') {
+      } else if (this.typeOfFilter === 'callingcode') {
         this.getAllCallingCodes()
       }
     },
@@ -94,7 +124,7 @@ export default {
       for (const i in this.allCountries) {
         allCapitals.push(this.allCountries[i].capital)
       }
-      this.optionsOfFilterType = allCapitals.filter(item => item !== '')
+      this.capitals = allCapitals.filter(item => item !== '')
     },
 
     async getAllLanguages () {
@@ -118,16 +148,22 @@ export default {
 
     async getAllCountries () {
       for (const country in this.allCountries) {
-        this.allFilteredCountries.push(this.allCountries[country].name)
+        this.countries.push(this.allCountries[country].name)
       }
-      this.optionsOfFilterType = this.allFilteredCountries.filter(item => item !== '')
+      this.countries = this.countries.filter(item => item !== '')
     },
 
     async getAllCallingCodes () {
-      for (const codes in this.allFlags) {
-        this.allCallingCodes.push(this.allFlags[codes].callingCodes)
+      for (const codes in this.allCountries) {
+        this.callingCodes.push(this.allCountries[codes].callingCodes[0])
       }
-      this.optionsOfFilterType = this.allCallingCodes.filter(item => item !== '')
+      this.callingCodes = this.callingCodes.filter(item => item !== '')
+      const unikCallingCodes = new Set()
+
+      this.callingCodes.forEach((item) => {
+        unikCallingCodes.add(item)
+      })
+      this.callingCodes = [...unikCallingCodes.values()]
     }
   }
 }

@@ -41,4 +41,8 @@ $border-button: #6D2080;
   color: #fff;
   background-color: $border-button;
 }
+
+.btn-secondary:focus, .btn-secondary.focus, .btn:focus, .btn.focus  {
+  box-shadow: #6D2080 !important;
+}
 </style>

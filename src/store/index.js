@@ -36,7 +36,7 @@ export default new Vuex.Store({
         const { data } = await api.get(params)
 
         for (const i in data) {
-          filteredFlags.push(data[i].flag)
+          filteredFlags.push(data[i])
         }
         context.commit('ADD_ALL_FLAGS', filteredFlags)
       } catch (err) {

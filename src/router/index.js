@@ -15,6 +15,12 @@ const routes = [
         path: '/home',
         name: 'Home',
         component: Home
+      },
+
+      {
+        path: '/contry/alpha2Code/:alpha',
+        name: 'Country',
+        component: () => import('../views/Country.vue')
       }
     ]
   }

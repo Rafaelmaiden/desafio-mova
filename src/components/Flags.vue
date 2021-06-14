@@ -1,8 +1,10 @@
 <template>
   <b-container>
     <b-row align-h="center" class="text-center">
-      <b-col v-for="(flag,  index) in allFlags" :key="index" class="m-auto p-0" cols="4">
-        <b-img class="country-img mb-3" :src="flag"></b-img>
+      <b-col v-for="flag in allFlags" :key="flag.alpha2Code" class="m-auto p-0" cols="4">
+        <router-link :to="{ name: 'Country', params: { alpha: flag.alpha2Code }}">
+          <b-img class="country-img mb-3" :src="flag.flag"></b-img>
+        </router-link>
       </b-col>
     </b-row>
   </b-container>
@@ -24,17 +26,7 @@ export default {
 
   computed: {
     ...mapState(['allFlags'])
-
-    /* changeFlags () {
-      return this.GET_FLAGS()
-    } */
   },
-
-  /* watch: {
-    allFlags: function () {
-      this.changeFlags()
-    }
-  }, */
 
   methods: {
     ...mapActions(['GET_FLAGS'])

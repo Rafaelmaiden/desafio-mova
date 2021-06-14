@@ -1,15 +1,17 @@
 <template>
   <b-navbar toggleable="lg" >
-    <b-navbar-brand href="#">
+    <b-navbar-brand href="/">
       <img src="../assets/img/logo_principal.png" alt="logo"/>
     </b-navbar-brand>
 
     <!-- Right aligned nav items -->
     <b-navbar-nav class="ml-auto">
-      <b-button variant="outline-light">
-        <img src="../assets/img/go_back.svg" alt="Voltar"/>
-        Voltar
-      </b-button>
+      <router-link v-if="this.$route.path !== '/home'" to="/">
+        <b-button variant="outline-light">
+          <img src="../assets/img/go_back.svg" alt="Voltar"/>
+          Voltar
+        </b-button>
+      </router-link>
     </b-navbar-nav>
   </b-navbar>
 </template>

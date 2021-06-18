@@ -6,10 +6,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    typeOfFilter: '',
+    typeOfFilter: null,
     textTypeFiltered: '',
-    filteredType: '',
-    allFlags: []
+    filteredType: null,
+    allFlags: [],
+    load: 1,
+    borders: []
   },
 
   mutations: {
@@ -24,11 +26,20 @@ export default new Vuex.Store({
 
     CHANGING_FILTERED_TYPE (state, payload) {
       state.filteredType = payload
+    },
+
+    CHANGE_LOADER (state, payload) {
+      state.load += 1
+    },
+
+    ADD_BORDERS (state, payload) {
+      state.borders = payload
     }
   },
 
   actions: {
     async GET_FLAGS (context, payload) {
+      /* console.log(payload) */
       const params = payload ? `/${payload.type}/${payload.filtered}` : '/all'
       const filteredFlags = []
 
@@ -38,10 +49,25 @@ export default new Vuex.Store({
         for (const i in data) {
           filteredFlags.push(data[i])
         }
+        /* console.log(filteredFlags) */
+
         context.commit('ADD_ALL_FLAGS', filteredFlags)
       } catch (err) {
         console.error(err)
       }
+    },
+
+    async GET_BORDERS (context, payload) {
+      /* console.log(payload) */
+      const border = []
+      const alpha = 'alpha'
+
+      for (const i in payload) {
+        const { data } = await api.get(`/${alpha}/${payload[i]}`)
+        border.push(data)
+      }
+      /* console.log(border) */
+      context.commit('ADD_BORDERS', border)
     }
   },
 

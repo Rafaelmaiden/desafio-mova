@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div> {{selectfilteredType}}
     <b-form-group
       :label="textTypeFiltered"
       label-for="filterByType">
       <b-form-select
         id="filterByType"
         @change="changeTypeFiltered()"
-        v-model="filteredType"
+        v-model="selectfilteredType"
         >
         <template #first>
           <b-form-select-option selected :value="null" disabled> Escolha uma {{ textTypeFiltered }} </b-form-select-option>
@@ -53,8 +53,14 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      filteredType: null,
-      regions: [],
+      selectfilteredType: null,
+      regions: [
+        { text: 'Africa', value: 'africa' },
+        { text: 'Americas', value: 'americas' },
+        { text: 'Ásia', value: 'asia' },
+        { text: 'Europa', value: 'europe' },
+        { text: 'Oceania', value: 'oceania' }
+      ],
       capitals: [],
       languages: [],
       countries: [],
@@ -63,13 +69,17 @@ export default {
     }
   },
 
+  created () {
+    this.$store.state.filteredType === 'region' ? this.selectfilteredType = this.$store.selectfilteredType : this.selectfilteredType = null
+  },
+
   mounted () {
     this.getCountries()
     this.changeTypeFiltered()
   },
 
   computed: {
-    ...mapState(['typeOfFilter', 'textTypeFiltered'])
+    ...mapState(['typeOfFilter', 'textTypeFiltered', 'filteredType'])
   },
 
   watch: {
@@ -95,18 +105,18 @@ export default {
         this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'name', textType: this.textTypeFiltered })
       }
 
-      await this.$store.commit('CHANGING_FILTERED_TYPE', this.filteredType)
+      this.$store.commit('CHANGING_FILTERED_TYPE', this.selectfilteredType)
     },
 
     async getFilters () {
+      if (this.selectfilteredType !== null) {
+        setTimeout(() => {
+          this.selectfilteredType = null
+        }, 75)
+      }
+
       if (this.typeOfFilter === 'region') {
-        this.regions = [
-          { text: 'Africa', value: 'africa' },
-          { text: 'Americas', value: 'americas' },
-          { text: 'Ásia', value: 'asia' },
-          { text: 'Europa', value: 'europe' },
-          { text: 'Oceania', value: 'oceania' }
-        ]
+
       } else if (this.typeOfFilter === 'capital') {
         this.getAllCapitals()
       } else if (this.typeOfFilter === 'language' || this.typeOfFilter === 'lang') {

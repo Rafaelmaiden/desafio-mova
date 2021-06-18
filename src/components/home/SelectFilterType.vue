@@ -1,5 +1,6 @@
 <template>
   <div>
+  {{selectedFilter}}
     <b-form-group
       label="Filtrar por"
       label-for="select">
@@ -34,6 +35,7 @@ export default {
   },
 
   created () {
+    this.typeOfFilter === 'region' ? this.selectedFilter = this.filterTypes[0] : this.selectedFilter = null
   },
 
   mounted () {
@@ -44,7 +46,7 @@ export default {
   },
 
   watch: {
-    selectedFilter: function () {
+    selectedFilter () {
       this.changeType()
     }
   },
@@ -61,7 +63,7 @@ export default {
         }
       }
 
-      await this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered })
+      this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: typeFiltered, textType: textTypeFiltered })
     }
   }
 }

@@ -4,9 +4,11 @@
       <b-col cols="3" class="ml-5 mr-auto">
         <SelectFilterType/>
       </b-col>
+
       <b-col v-show="typeOfFilter" cols="3">
         <FilterSelectedByType />
       </b-col>
+
       <b-col cols="3" class="ml-auto mt-2">
         <SearchButton/>
       </b-col>
@@ -28,10 +30,10 @@
 </template>
 
 <script>
-import SelectFilterType from '../components/SelectFilterType'
-import FilterSelectedByType from '@/components/FilterSelectedByType'
-import SearchButton from '../components/SearchButton'
-import Flags from '@/components/Flags'
+import SelectFilterType from '../components/home/SelectFilterType'
+import FilterSelectedByType from '@/components/home/FilterSelectedByType'
+import SearchButton from '../components/home/SearchButton'
+import Flags from '@/components/home/Flags'
 import Pagination from '@/components/Pagination'
 
 import { mapState } from 'vuex'

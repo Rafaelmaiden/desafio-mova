@@ -19,6 +19,7 @@ export default {
 
     async searchFlagsByType () {
       this.$store.dispatch('GET_FLAGS', { type: this.typeOfFilter, filtered: this.filteredType })
+      this.$store.commit('CHANGE_LOADER')
     }
   }
 }

@@ -1,34 +1,122 @@
 <template>
   <b-container>
-    <b-row>{{ allFlags[21] }}
-      <b-col >
-        <b-img></b-img>
+    <Loader v-show="this.loading"> </Loader>
+    <b-row v-show="!this.loading" class="flag-row" >
+      <b-col md="12">
+        <b-row no-gutters>
+          <b-col md="6" class="p-0 mr-3 flag">
+            <b-img class="flag" :src="flagData[21]" :alt="flagData[0]"></b-img>
+          </b-col>
+          <b-col md="6" class="text-left py-1" style="height: 242px">
+            <ul>
+              <li>
+                <span>Nome: {{ flagData[0] }}</span>
+              </li><br>
+              <li>
+                <span>Capital: {{ flagData[5] }}</span>
+              </li><br>
+              <li>
+                <span>Região: <a @click="changeToHome(flagData[7]) " class="region" href="">{{ flagData[7] }}</a></span>
+              </li><br>
+              <li>
+                <span>Sub-região: {{ flagData[8] }}</span>
+              </li><br>
+              <li>
+                <span>População: {{ flagData[9] }}</span>
+              </li><br>
+              <li>
+                <span>
+                  Linguas: <span v-for="(lang, key) in flagData[19]" :key="key">{{ lang.name }}, {{  }}</span>
+                </span>
+              </li>
+            </ul>
+          </b-col>
+        </b-row>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import Loader from '@/components/Loader'
+import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'SelectedCountry',
+  components: { Loader },
   data () {
     return {
-      params: this.$route.params.alpha
+      flagData: [],
+      loading: true
     }
   },
 
-  created () {
-    this.GET_FLAGS({ type: 'alpha', filtered: this.params })
+  /* created () {
+    setTimeout(() => {
+      this.GET_FLAGS({ type: 'alpha', filtered: this.params })
+    }, 1000)
+  }, */
+
+  mounted () {
+    setTimeout(() => {
+      this.flagData = this.$store.state.allFlags
+      this.loading = false
+      this.GET_BORDERS(this.flagData[15])
+    }, 1500)
   },
 
   computed: {
     ...mapState(['allFlags'])
   },
 
+  watch: {
+    allFlags () {
+      this.loading = true
+      setTimeout(() => {
+        this.flagData = this.allFlags
+        this.GET_BORDERS(this.flagData[15])
+        this.loading = false
+      }, 500)
+    }
+  },
+
   methods: {
-    ...mapActions(['GET_FLAGS'])
+    ...mapMutations(['CHANGE_TYPE_OF_FILTER', 'CHANGING_FILTERED_TYPE']),
+    ...mapActions(['GET_FLAGS', 'GET_BORDERS']),
+
+    changeToHome (region) {
+      console.log(region)
+      setTimeout(() => {
+        this.$store.commit('CHANGE_TYPE_OF_FILTER', 'region')
+        this.CHANGING_FILTERED_TYPE(region)
+        this.GET_FLAGS('region', region)
+      }, 200)
+      this.$router.push({ name: 'Home' })
+    }
   }
 }
 </script>
+
+<style scoped>
+.flag-row {
+  margin-top: 96px;
+}
+
+.flag {
+  min-width: 443px;
+  max-width: 443px;
+  min-height: 258px;
+  max-height: 258px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  padding: 0 !important;
+}
+
+ul {
+  list-style-type: none !important;
+  height: 242px;
+  min-width: 213px;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+</style>

@@ -25,23 +25,23 @@ export default {
   },
 
   created () {
+  },
+
+  mounted () {
     setTimeout(() => {
-      if (this.$store.state.filteredType && this.$store.state.typeOfFilter) {
-        this.GET_FLAGS({ type: this.$store.state.typeOfFilter, filtered: this.$store.state.typeOfFilter })
+      if (this.$store.state.filteredType !== null && this.$store.state.typeOfFilter !== null) {
+        this.GET_FLAGS({ type: this.typeOfFilter, filtered: this.filteredType })
       } else {
         this.GET_FLAGS()
       }
     }, 500)
-  },
-
-  mounted () {
     setTimeout(() => {
       this.loading = false
     }, 1000)
   },
 
   computed: {
-    ...mapState(['allFlags', 'load'])
+    ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType'])
   },
 
   watch: {
@@ -60,7 +60,7 @@ export default {
       }, 500)
       setTimeout(() => {
         this.loading = false
-      }, 700)
+      }, 900)
     },
 
     async sendCountryToViewIt (alphaCode) {

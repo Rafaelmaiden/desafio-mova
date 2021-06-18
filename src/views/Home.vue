@@ -20,7 +20,7 @@
       </b-col>
     </b-row>
 
-    <b-row>
+    <b-row v-if="this.viewPagination && this.allFlags.length > 1">
       <b-col cols="12">
         <Pagination />
       </b-col>
@@ -42,11 +42,22 @@ export default {
   components: { SelectFilterType, FilterSelectedByType, SearchButton, Pagination, Flags },
   name: 'Home',
   data () {
-    return {}
+    return {
+      viewPagination: false
+    }
   },
 
   computed: {
-    ...mapState(['typeOfFilter'])
+    ...mapState(['typeOfFilter', 'allFlags'])
+  },
+
+  watch: {
+    allFlags () {
+      this.viewPagination = false
+      setTimeout(() => {
+        this.viewPagination = true
+      }, 500)
+    }
   }
 }
 </script>

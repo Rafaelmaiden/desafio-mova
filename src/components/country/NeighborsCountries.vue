@@ -1,12 +1,17 @@
 <template>
   <b-container>
-  <span class="neighbors-countries">Países Vizinhos: </span><br>
-  <Loader v-show="this.loading"> </Loader>
+    <span class="neighbors-countries" style="color: #000">Países Vizinhos: </span><br><br><br>
+    <Loader v-show="this.loading"> </Loader>
     <b-row  v-show="!this.loading">
       <b-col cols="4" v-for="(neighbor, index) in this.borders" :key="index" >
         <a @click="reloadCurrentPage(neighbor.alpha2Code)" >
           <b-img class="country-img mb-3" :src="neighbor.flag" :alt="neighbor.name"></b-img>
         </a>
+      </b-col>
+    </b-row>
+    <b-row v-show="!this.borders[0]">
+      <b-col>
+        <span class="neighbors-countries text-center">Nenhum país encontrado </span><br><br><br>
       </b-col>
     </b-row>
   </b-container>

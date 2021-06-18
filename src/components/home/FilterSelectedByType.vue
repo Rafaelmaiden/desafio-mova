@@ -1,12 +1,13 @@
 <template>
-  <div> {{selectfilteredType}}
+  <div>
+    <!-- {{selectFilteredType}} -->
     <b-form-group
       :label="textTypeFiltered"
       label-for="filterByType">
       <b-form-select
         id="filterByType"
         @change="changeTypeFiltered()"
-        v-model="selectfilteredType"
+        v-model="selectFilteredType"
         >
         <template #first>
           <b-form-select-option selected :value="null" disabled> Escolha uma {{ textTypeFiltered }} </b-form-select-option>
@@ -53,7 +54,7 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      selectfilteredType: null,
+      selectFilteredType: null,
       regions: [
         { text: 'Africa', value: 'africa' },
         { text: 'Americas', value: 'americas' },
@@ -70,7 +71,7 @@ export default {
   },
 
   created () {
-    this.$store.state.filteredType === 'region' ? this.selectfilteredType = this.$store.selectfilteredType : this.selectfilteredType = null
+    this.$store.state.filteredType === 'region' ? this.selectFilteredType = this.$store.selectFilteredType : this.selectFilteredType = null
   },
 
   mounted () {
@@ -79,7 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['typeOfFilter', 'textTypeFiltered', 'filteredType'])
+    ...mapState(['typeOfFilter', 'textTypeFiltered', 'filteredType', 'selectedRegionSearch'])
   },
 
   watch: {
@@ -99,20 +100,25 @@ export default {
     },
 
     async changeTypeFiltered () {
+      if (this.selectedRegionSearch) {
+        this.selectFilteredType = this.filteredType
+        this.$store.commit('CHANGE_SELECTED_REGION_SEARCH', false)
+      }
       if (this.typeOfFilter === 'language') {
         this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'lang', textType: this.textTypeFiltered })
       } else if (this.typeOfFilter === 'country') {
         this.$store.commit('CHANGE_TYPE_OF_FILTER', { type: 'name', textType: this.textTypeFiltered })
       }
 
-      this.$store.commit('CHANGING_FILTERED_TYPE', this.selectfilteredType)
+      this.$store.commit('CHANGING_FILTERED_TYPE', this.selectFilteredType)
     },
 
     async getFilters () {
-      if (this.selectfilteredType !== null) {
-        setTimeout(() => {
+      if (this.selectFilteredType !== null) {
+        this.selectfilteredType = null
+        /* setTimeout(() => {
           this.selectfilteredType = null
-        }, 75)
+        }, 75) */
       }
 
       if (this.typeOfFilter === 'region') {

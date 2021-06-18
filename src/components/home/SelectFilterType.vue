@@ -1,6 +1,6 @@
 <template>
   <div>
-  {{selectedFilter}}
+  <!-- {{ selectedFilter }} -->
     <b-form-group
       label="Filtrar por"
       label-for="select">
@@ -35,10 +35,12 @@ export default {
   },
 
   created () {
-    this.typeOfFilter === 'region' ? this.selectedFilter = this.filterTypes[0] : this.selectedFilter = null
   },
 
   mounted () {
+    setTimeout(() => {
+      this.typeOfFilter === 'region' ? this.selectedFilter = this.filterTypes[0].value : this.selectedFilter = null
+    }, 500)
   },
 
   computed: {

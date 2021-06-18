@@ -4,14 +4,14 @@
       <b-col class="p-0">
         <SelectedCountry />
       </b-col>
-    </b-row>
-    <b-row class="mt-3 mb-5">
+    </b-row><br><b></b>
+    <b-row class="mt-4 mb-5">
       <Loader v-show="this.loading"> </Loader>
       <b-col v-show="!this.loading">
         <NeighborsCountries />
       </b-col>
     </b-row>
-    <b-row v-show="this.borders > 0">
+    <b-row v-if="this.borders[0]" class=" mb-5">
       <b-col>
         <Pagination />
       </b-col>

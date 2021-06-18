@@ -16,7 +16,7 @@
                 <span>Capital: {{ flagData[5] }}</span>
               </li><br>
               <li>
-                <span>Região: <a @click="changeToHome(flagData[7]) " class="region" href="">{{ flagData[7] }}</a></span>
+                <span>Região: <a @click.prevent.stop="changeToHome(flagData[7]) " class="region" href="">{{ flagData[7] }}</a></span>
               </li><br>
               <li>
                 <span>Sub-região: {{ flagData[8] }}</span>
@@ -85,11 +85,12 @@ export default {
     ...mapActions(['GET_FLAGS', 'GET_BORDERS']),
 
     changeToHome (region) {
-      console.log(region)
+      const regionToFilter = region.toLowerCase()
+
       setTimeout(() => {
-        this.$store.commit('CHANGE_TYPE_OF_FILTER', 'region')
-        this.CHANGING_FILTERED_TYPE(region)
-        this.GET_FLAGS('region', region)
+        this.CHANGE_TYPE_OF_FILTER({ type: 'region', textType: 'Região' })
+        this.CHANGING_FILTERED_TYPE(regionToFilter)
+        this.$store.commit('CHANGE_SELECTED_REGION_SEARCH', true)
       }, 200)
       this.$router.push({ name: 'Home' })
     }

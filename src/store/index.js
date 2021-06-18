@@ -11,7 +11,8 @@ export default new Vuex.Store({
     filteredType: null,
     allFlags: [],
     load: 1,
-    borders: []
+    borders: [],
+    selectedRegionSearch: null
   },
 
   mutations: {
@@ -34,6 +35,10 @@ export default new Vuex.Store({
 
     ADD_BORDERS (state, payload) {
       state.borders = payload
+    },
+
+    CHANGE_SELECTED_REGION_SEARCH (state, payload) {
+      state.selectedRegionSearch = payload
     }
   },
 

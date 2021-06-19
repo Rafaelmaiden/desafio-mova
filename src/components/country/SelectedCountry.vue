@@ -4,10 +4,10 @@
     <b-row v-show="!this.loading" class="flag-row" >
       <b-col md="12" class="px-4">
         <b-row no-gutters>
-          <b-col sm="12" xs="12" lg="6" md="6" class="p-0 mr-3 flag">
+          <b-col sm="12" lg="6" md="6" class="p-0 mr-3 flag">
             <b-img class="flag" :src="flagData[21]" :alt="flagData[0]"></b-img>
           </b-col>
-          <b-col md="6" class="text-left py-1" style="height: 242px">
+          <b-col md="6" sm="12" lg="6" class="text-left py-1 country-info" style="height: 242px">
             <ul>
               <li>
                 <span>Nome: {{ flagData[0] }}</span>
@@ -50,12 +50,6 @@ export default {
       loading: true
     }
   },
-
-  /* created () {
-    setTimeout(() => {
-      this.GET_FLAGS({ type: 'alpha', filtered: this.params })
-    }, 1000)
-  }, */
 
   mounted () {
     setTimeout(() => {
@@ -101,6 +95,16 @@ export default {
 <style scoped>
 .flag-row {
   margin-top: 96px;
+}
+
+@media screen and (max-width: 400px) {
+  .flag-row {
+    margin-top: 10px !important;
+  }
+
+  .country-info {
+    margin-top: 10px !important;
+  }
 }
 
 .flag {

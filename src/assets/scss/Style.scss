@@ -19,6 +19,7 @@ div label {
   margin-bottom: 0 !important;
   /* height: calc(1.5em + 0.75rem + 2px); */
   height: calc(0.7em + 0.75rem + 2px) !important;
+  color: #8D8D8D !important;
 }
 
 .custom-select:focus, .form-control:focus {
@@ -57,17 +58,18 @@ img {
 }
 
 .country-img {
-  min-width: 316px;
-  max-width: 316px;
-  min-height: 181px;
-  max-height: 181px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  min-width: 316px !important;
+  max-width: 316px !important;
+  min-height: 181px !important;
+  max-height: 181px !important;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
   padding: 0 !important;
   object-fit: contain !important;
 }
 
 @media screen and (max-width: 400px) {
-  .country-img {
-    min-width: 100%;
+  .country-img, .flag {
+    min-width: 100% !important;
+    max-width: 100% !important;
   }
 }

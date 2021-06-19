@@ -2,7 +2,7 @@
   <b-container>
     <Loader v-show="this.loading"> </Loader>
     <b-row v-show="!this.loading" align-h="center" class="text-center">
-      <b-col sm="12" xs="12" lg="4" md="4" v-for="flag in allFlags" :key="flag.alpha2Code" class="m-auto p-0">
+      <b-col sm="12" lg="4" md="4" v-for="flag in allFlags" :key="flag.alpha2Code" class="m-auto p-0">
         <a @click="sendCountryToViewIt(flag.alpha2Code)">
           <b-img class="country-img mb-3" :src="flag.flag" :alt="flag.name"></b-img>
         </a>

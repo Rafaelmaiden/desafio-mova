@@ -3,9 +3,11 @@
     <span class="neighbors-countries" style="color: #000">Países Vizinhos: </span><br><br><br>
     <Loader v-show="this.loading"> </Loader>
     <b-row  v-show="!this.loading">
-      <b-col sm="12" xs="12" lg="4" md="4" v-for="(neighbor, index) in this.borders" :key="index" >
+      <b-col sm="12" xs="12" lg="4" md="4"
+        class="p-0"
+        v-for="(neighbor, index) in this.borders" :key="index" >
         <a @click="reloadCurrentPage(neighbor.alpha2Code)" >
-          <b-img class="country-img mb-3" :src="neighbor.flag" :alt="neighbor.name"></b-img>
+          <b-img class="country-img mb-3 ml-0 mr-0" :src="neighbor.flag" :alt="neighbor.name"></b-img>
         </a>
       </b-col>
     </b-row>
@@ -40,7 +42,7 @@ export default {
       setTimeout(() => {
         this.flagData = this.allFlags
         this.loading = false
-      }, 550)
+      }, 700)
     }
   },
 
@@ -58,3 +60,7 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+
+</style>

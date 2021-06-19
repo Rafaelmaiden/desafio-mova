@@ -43,7 +43,13 @@ $border-button: #6D2080;
   background-color: $border-button;
 }
 
-.btn-secondary:focus, .btn-secondary.focus, .btn:focus, .btn.focus  {
-  box-shadow: #6D2080 !important;
+.btn-secondary:focus, .btn-secondary.focus {
+  box-shadow: none !important;
 }
+
+/* @media screen and (max-width: 400px) {
+  .btn {
+    margin-left: auto !important;
+  }
+} */
 </style>

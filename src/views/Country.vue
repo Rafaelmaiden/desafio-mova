@@ -5,7 +5,7 @@
         <SelectedCountry />
       </b-col>
     </b-row><br><b></b>
-    <b-row class="mt-4 mb-5">
+    <b-row class="mt-4 mb-5 borders">
       <Loader v-show="this.loading"> </Loader>
       <b-col v-show="!this.loading">
         <NeighborsCountries />
@@ -55,3 +55,12 @@ export default {
   methods: {}
 }
 </script>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 400px) {
+  .borders {
+    margin-top: 0px !important;
+    margin-bottom: 10px !important;
+  }
+}
+</style>

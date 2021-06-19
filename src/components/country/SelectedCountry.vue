@@ -2,9 +2,9 @@
   <b-container>
     <Loader v-show="this.loading"> </Loader>
     <b-row v-show="!this.loading" class="flag-row" >
-      <b-col md="12">
+      <b-col md="12" class="px-4">
         <b-row no-gutters>
-          <b-col md="6" class="p-0 mr-3 flag">
+          <b-col sm="12" xs="12" lg="6" md="6" class="p-0 mr-3 flag">
             <b-img class="flag" :src="flagData[21]" :alt="flagData[0]"></b-img>
           </b-col>
           <b-col md="6" class="text-left py-1" style="height: 242px">

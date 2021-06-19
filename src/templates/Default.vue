@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
   /* .main-content {
     margin-top: 60px;
     margin-bottom: 60px;

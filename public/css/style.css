@@ -6,8 +6,11 @@ body {
   /* display: flex; */
   /* justify-content: center;
   align-items: center; */
-  width: 100%;
+  width: 100% !important;
   /* height: 100vh; */
-  background-color: #E5E5E5;
   margin: 0 auto !important;
+}
+
+html {
+  width: 100% !important;
 }

@@ -1,15 +1,15 @@
 <template>
   <b-container class="home" fluid>
-    <b-row align-h="between" class="mb-3">
-      <b-col cols="3" class="ml-5 mr-auto">
+    <b-row align-h="between" class="mb-3 mt-5">
+      <b-col sm="12" xs="12" lg="3" md="3" class="firstFilter ml-5 mr-auto">
         <SelectFilterType/>
       </b-col>
 
-      <b-col v-show="typeOfFilter" cols="3">
+      <b-col v-show="typeOfFilter" sm="12" xs="12" lg="3" md="3">
         <FilterSelectedByType />
       </b-col>
 
-      <b-col cols="3" class="ml-auto mt-2">
+      <b-col sm="12" xs="12" lg="3" md="3" class="ml-auto mt-2">
         <SearchButton/>
       </b-col>
     </b-row>
@@ -66,6 +66,21 @@ export default {
 
 .home {
   padding: 100px;
+}
+
+@media screen and (max-width: 400px) {
+  .home {
+    padding: 0;
+  }
+
+  .row {
+    justify-content: center !important;
+  }
+
+  .firstFilter {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
 }
 
 </style>

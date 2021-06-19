@@ -3,7 +3,7 @@
     <span class="neighbors-countries" style="color: #000">Países Vizinhos: </span><br><br><br>
     <Loader v-show="this.loading"> </Loader>
     <b-row  v-show="!this.loading">
-      <b-col cols="4" v-for="(neighbor, index) in this.borders" :key="index" >
+      <b-col sm="12" xs="12" lg="4" md="4" v-for="(neighbor, index) in this.borders" :key="index" >
         <a @click="reloadCurrentPage(neighbor.alpha2Code)" >
           <b-img class="country-img mb-3" :src="neighbor.flag" :alt="neighbor.name"></b-img>
         </a>

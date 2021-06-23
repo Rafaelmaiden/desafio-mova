@@ -1,25 +1,60 @@
 <template>
   <div class="pagination">
     <!-- < &nbsp; -->
-    <div class="back-page"> ❮ &nbsp; </div>
+    <div @click="navigate($event, source.currentPage - 1)" class="back-page cursor"> ❮ &nbsp; </div>
     <div v-for="(page, index) in pages" :key="index">
-      <div class="page">
+      <div class="page cursor" >
         {{ page }}
       </div>
     </div>
-    <div class="next-page"> &nbsp; ❯</div>
+    <div @click="navigate($event, source.currentPage + 1)" class="next-page cursor"> &nbsp; ❯</div>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'Pagination',
   data () {
     return {
-      pages: ['1', '2', '3', '4', '5']
+      pages: ['1', '2', '3', '4', '5'],
+      currentPage: 1,
+      itemsPerPage: 10
     }
+  },
+
+  computed: {
+    ...mapState(['allflags'])
+  },
+
+  methods: {
+    ...mapMutations(['CHANGE_PAGINATION'])
+
+    /* listItems () {
+      const { allFlags, currentPage, itemsPerPage } = this
+
+      const result = []
+      const totalPage = Math.ceil(allFlags.length / itemsPerPage)
+      let count = (currentPage * itemsPerPage) - itemsPerPage
+      const delimiter = count + itemsPerPage
+
+      if (currentPage <= totalPage) {
+        for (let i = count; i < delimiter; i++) {
+          if (allFlags[i] !== null) {
+            result.push(allFlags[i])
+          }
+          count++
+        }
+      }
+      return result
+    } */
   }
+
+  /* totalPages () {
+    const total = this.allFlags.length / 10
+    return total !== Infinity ? Math.ceil(total) : 0
+  } */
 }
 </script>
 
@@ -44,6 +79,11 @@ export default {
   left: 86px;
   border-radius: 2px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+a.active {
+  background-color: #6D2080 !important;
+  color: #fff !important;
 }
 
 .back-page {

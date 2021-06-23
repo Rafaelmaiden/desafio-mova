@@ -14,7 +14,7 @@
       </b-col>
     </b-row>
 
-    <b-row align-h="center">
+    <b-row align-h="center" class="mb-3">
       <b-col cols="12">
         <Flags />
       </b-col>

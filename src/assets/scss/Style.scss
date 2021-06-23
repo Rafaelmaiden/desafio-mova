@@ -55,6 +55,7 @@ ul > li, .neighbors-countries {
 
 img {
   object-fit: contain !important;
+  cursor: pointer !important;
 }
 
 .country-img {
@@ -65,6 +66,10 @@ img {
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
   padding: 0 !important;
   object-fit: contain !important;
+}
+
+.cursor {
+  cursor: pointer !important;
 }
 
 @media screen and (max-width: 400px) {

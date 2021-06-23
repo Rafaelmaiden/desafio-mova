@@ -12,7 +12,8 @@ export default new Vuex.Store({
     allFlags: [],
     load: 1,
     borders: [],
-    selectedRegionSearch: null
+    selectedRegionSearch: null,
+    itemsToShow: []
   },
 
   mutations: {
@@ -39,6 +40,10 @@ export default new Vuex.Store({
 
     CHANGE_SELECTED_REGION_SEARCH (state, payload) {
       state.selectedRegionSearch = payload
+    },
+
+    CHANGE_PAGINATION (state, payload) {
+      state.itemsToShow = payload
     }
   },
 

@@ -28,7 +28,8 @@
         <div class="pagination">
           <!-- < &nbsp; -->
           <div
-            @click="currentPage -= 1"
+            v-show="!disablePrevButton"
+            @click="prevPage()"
             class="back-page cursor"
           > ❮ &nbsp; </div>
           <div
@@ -44,7 +45,8 @@
             </div>
           </div>
           <div
-            @click="currentPage += 1"
+            v-show="!disableNextButton"
+            @click="nextPage()"
             class="next-page cursor"
           > &nbsp; ❯</div>
         </div>
@@ -64,7 +66,9 @@ export default {
     return {
       loading: true,
       currentPage: 1,
-      itemsPerPage: 10
+      itemsPerPage: 12,
+      disablePrevButton: false,
+      disableNextButton: false
     }
   },
 
@@ -86,13 +90,11 @@ export default {
 
   computed: {
     ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']),
+
     allowList () {
       const { totalPages } = this
       const currentPage = this.currentPage
       const allowList = []
-      // console.log(currentPage)
-      // const next = Math.ceil(5 / currentPage)
-      // const back = Math.ceil(currentPage / 5)
       if (currentPage - 4 > 0 && currentPage >= totalPages) {
         allowList.push(currentPage - 4)
         allowList.push(currentPage - 3)
@@ -111,12 +113,12 @@ export default {
 
       allowList.push(currentPage)
 
-      if (currentPage + 4 < totalPages && currentPage < 2) {
+      if (currentPage + 4 <= totalPages && currentPage < 2) {
         allowList.push(currentPage + 1)
         allowList.push(currentPage + 2)
         allowList.push(currentPage + 3)
         allowList.push(currentPage + 4)
-      } else if (currentPage + 3 < totalPages && currentPage < 3) {
+      } else if (currentPage + 3 <= totalPages && currentPage < 3) {
         allowList.push(currentPage + 1)
         allowList.push(currentPage + 2)
         allowList.push(currentPage + 3)
@@ -129,6 +131,7 @@ export default {
 
       return allowList
     },
+
     listItems () {
       const { allFlags, currentPage, itemsPerPage } = this
 
@@ -146,14 +149,13 @@ export default {
       }
       return result
     },
+
     totalPages () {
       const allFlags = []
       for (const i in this.allFlags) {
         allFlags.push(this.allFlags[i].flag)
-        // console.log(this.allFlags[i].name)
       }
-      const total = allFlags.length / 10
-      // console.log(allFlags.length)
+      const total = allFlags.length / this.itemsPerPage
       return total !== Infinity ? Math.ceil(total) : 0
     }
   },
@@ -161,6 +163,24 @@ export default {
   watch: {
     load () {
       this.changeLoadingStatus()
+    },
+
+    currentPage () {
+      if (this.currentPage === 1) {
+        this.disablePrevButton = true
+      } else {
+        this.disablePrevButton = false
+      }
+
+      if (this.currentPage === this.totalPages) {
+        this.disableNextButton = true
+      } else {
+        this.disableNextButton = false
+      }
+    },
+
+    allFlags () {
+      this.currentPage = 1
     }
   },
 
@@ -176,6 +196,16 @@ export default {
       setTimeout(() => {
         this.loading = false
       }, 900)
+    },
+
+    prevPage () {
+      this.disableNextButton = false
+      this.currentPage -= 1
+    },
+
+    nextPage () {
+      this.disablePrevButton = false
+      this.currentPage += 1
     },
 
     async sendCountryToViewIt (alphaCode) {

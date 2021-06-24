@@ -20,12 +20,6 @@
       </b-col>
     </b-row>
 
-    <b-row v-if="this.viewPagination && this.allFlags.length > 1">
-      <b-col cols="12">
-        <Pagination />
-      </b-col>
-    </b-row>
-
   </b-container>
 </template>
 
@@ -34,30 +28,19 @@ import SelectFilterType from '../components/home/SelectFilterType'
 import FilterSelectedByType from '@/components/home/FilterSelectedByType'
 import SearchButton from '../components/home/SearchButton'
 import Flags from '@/components/home/Flags'
-import Pagination from '@/components/Pagination'
 
 import { mapState } from 'vuex'
 
 export default {
-  components: { SelectFilterType, FilterSelectedByType, SearchButton, Pagination, Flags },
+  components: { SelectFilterType, FilterSelectedByType, SearchButton, Flags },
   name: 'Home',
   data () {
     return {
-      viewPagination: false
     }
   },
 
   computed: {
     ...mapState(['typeOfFilter', 'allFlags'])
-  },
-
-  watch: {
-    allFlags () {
-      this.viewPagination = false
-      setTimeout(() => {
-        this.viewPagination = true
-      }, 500)
-    }
   }
 }
 </script>

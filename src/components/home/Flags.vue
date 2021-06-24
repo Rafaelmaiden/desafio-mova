@@ -23,10 +23,10 @@
         </a>
       </b-col>
     </b-row>
-    <b-row>
+
+    <b-row v-show="listItems.length > 2" class="mt-3">
       <b-col>
         <div class="pagination">
-          <!-- < &nbsp; -->
           <div
             v-show="!disablePrevButton"
             @click="prevPage()"
@@ -48,7 +48,8 @@
             v-show="!disableNextButton"
             @click="nextPage()"
             class="next-page cursor"
-          > &nbsp; ❯</div>
+            > &nbsp; ❯
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -219,54 +220,5 @@ export default {
 </script>
 
 <style scoped>
-.pagination {
-  justify-content: center;
-  width: 100%;
-  /* position: fixed;
-  bottom: 40px; */
-  font-family: Montserrat;
-  color: #8d8d8d;
-}
 
-.page {
-  padding: 5px 8px 8px 8px;
-  margin-right: 5px;
-  text-align: center;
-  vertical-align: middle;
-  width: 34px;
-  height: 34px;
-  left: 86px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-}
-
-div .active {
-  background-color: #6d2080 !important;
-  color: #fff !important;
-}
-
-.back-page {
-  margin-top: 3px;
-  width: 28px;
-  height: 28px;
-  margin-right: 5px;
-  padding-left: 10px;
-  padding-top: 2.5px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-}
-
-.next-page {
-  margin-top: 3px;
-  width: 28px;
-  height: 28px;
-  padding-left: 10px;
-  padding-top: 2.5px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
-}
-
-.pagination :hover:not(.active) {
-  background-color: #ddd;
-}
 </style>

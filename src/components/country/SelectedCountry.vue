@@ -70,7 +70,7 @@ export default {
         this.flagData = this.allFlags
         this.GET_BORDERS(this.flagData[15])
         this.loading = false
-      }, 500)
+      }, 700)
     }
   },
 

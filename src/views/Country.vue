@@ -4,16 +4,12 @@
       <b-col class="p-0">
         <SelectedCountry />
       </b-col>
-    </b-row><br><b></b>
+    </b-row><br>
+
     <b-row class="mt-4 mb-5 borders">
       <Loader v-show="this.loading"> </Loader>
       <b-col v-show="!this.loading">
         <NeighborsCountries />
-      </b-col>
-    </b-row>
-    <b-row v-if="this.borders[0]" class=" mb-5">
-      <b-col>
-        <Pagination />
       </b-col>
     </b-row>
   </b-container>
@@ -22,12 +18,10 @@
 <script>
 import SelectedCountry from '@/components/country/SelectedCountry'
 import NeighborsCountries from '@/components/country/NeighborsCountries'
-import Pagination from '@/components/Pagination'
 import Loader from '@/components/Loader'
-import { mapState } from 'vuex'
 
 export default {
-  components: { SelectedCountry, NeighborsCountries, Pagination, Loader },
+  components: { SelectedCountry, NeighborsCountries, Loader },
   name: 'Country',
   data () {
     return {
@@ -40,10 +34,6 @@ export default {
     setTimeout(() => {
       this.loading = false
     }, 1800)
-  },
-
-  computed: {
-    ...mapState(['borders'])
   },
 
   watch: {

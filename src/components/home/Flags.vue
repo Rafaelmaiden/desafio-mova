@@ -1,10 +1,25 @@
 <template>
   <b-container>
     <Loader v-show="this.loading"> </Loader>
-    <b-row v-show="!this.loading" align-h="center" class="text-center">
-      <b-col sm="12" lg="4" md="4" v-for="flag in listItems()" :key="flag.alpha2Code" class="m-auto p-0">
+    <b-row
+      v-show="!this.loading"
+      align-h="center"
+      class="text-center"
+    >
+      <b-col
+        sm="12"
+        lg="4"
+        md="4"
+        v-for="flag in listItems"
+        :key="flag.alpha2Code"
+        class="m-auto p-0"
+      >
         <a @click="sendCountryToViewIt(flag.alpha2Code)">
-          <b-img class="country-img mb-3" :src="flag.flag" :alt="flag.name"></b-img>
+          <b-img
+            class="country-img mb-3"
+            :src="flag.flag"
+            :alt="flag.name"
+          ></b-img>
         </a>
       </b-col>
     </b-row>
@@ -12,14 +27,26 @@
       <b-col>
         <div class="pagination">
           <!-- < &nbsp; -->
-          <div @click="currentPage -= 1" class="back-page cursor"> ❮ &nbsp; </div>
-            <div v-for="page in totalPages()" :key="page">
-              <div class="page cursor" :class="currentPage === page ? 'active' : ''"
-                @click="currentPage = page">
-                {{ page }}
-              </div>
+          <div
+            @click="currentPage -= 1"
+            class="back-page cursor"
+          > ❮ &nbsp; </div>
+          <div
+            v-for="page in allowList"
+            :key="page"
+          >
+            <div
+              class="page cursor"
+              :class="currentPage === page ? 'active' : ''"
+              @click="currentPage = page"
+            >
+              {{ page }}
             </div>
-          <div @click="currentPage += 1" class="next-page cursor"> &nbsp; ❯</div>
+          </div>
+          <div
+            @click="currentPage += 1"
+            class="next-page cursor"
+          > &nbsp; ❯</div>
         </div>
       </b-col>
     </b-row>
@@ -58,7 +85,77 @@ export default {
   },
 
   computed: {
-    ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow'])
+    ...mapState(['allFlags', 'load', 'typeOfFilter', 'filteredType', 'itemsToShow']),
+    allowList () {
+      const { totalPages } = this
+      const currentPage = this.currentPage
+      const allowList = []
+      // console.log(currentPage)
+      // const next = Math.ceil(5 / currentPage)
+      // const back = Math.ceil(currentPage / 5)
+      if (currentPage - 4 > 0 && currentPage >= totalPages) {
+        allowList.push(currentPage - 4)
+        allowList.push(currentPage - 3)
+        allowList.push(currentPage - 2)
+        allowList.push(currentPage - 1)
+      } else if (currentPage - 3 > 0 && currentPage + 1 >= totalPages) {
+        allowList.push(currentPage - 3)
+        allowList.push(currentPage - 2)
+        allowList.push(currentPage - 1)
+      } else if (currentPage - 2 > 0) {
+        allowList.push(currentPage - 2)
+        allowList.push(currentPage - 1)
+      } else if (currentPage - 1 > 0) {
+        allowList.push(currentPage - 1)
+      }
+
+      allowList.push(currentPage)
+
+      if (currentPage + 4 < totalPages && currentPage < 2) {
+        allowList.push(currentPage + 1)
+        allowList.push(currentPage + 2)
+        allowList.push(currentPage + 3)
+        allowList.push(currentPage + 4)
+      } else if (currentPage + 3 < totalPages && currentPage < 3) {
+        allowList.push(currentPage + 1)
+        allowList.push(currentPage + 2)
+        allowList.push(currentPage + 3)
+      } else if (currentPage + 2 <= totalPages) {
+        allowList.push(currentPage + 1)
+        allowList.push(currentPage + 2)
+      } else if (currentPage + 1 <= totalPages) {
+        allowList.push(currentPage + 1)
+      }
+
+      return allowList
+    },
+    listItems () {
+      const { allFlags, currentPage, itemsPerPage } = this
+
+      const result = []
+      const totalPage = Math.ceil(allFlags.length / itemsPerPage)
+      let count = (currentPage * itemsPerPage) - itemsPerPage
+      const delimiter = count + itemsPerPage
+      if (currentPage <= totalPage) {
+        for (let i = count; i < delimiter; i++) {
+          if (allFlags[i]) {
+            result.push(allFlags[i])
+          }
+          count++
+        }
+      }
+      return result
+    },
+    totalPages () {
+      const allFlags = []
+      for (const i in this.allFlags) {
+        allFlags.push(this.allFlags[i].flag)
+        // console.log(this.allFlags[i].name)
+      }
+      const total = allFlags.length / 10
+      // console.log(allFlags.length)
+      return total !== Infinity ? Math.ceil(total) : 0
+    }
   },
 
   watch: {
@@ -70,36 +167,6 @@ export default {
   methods: {
     ...mapActions(['GET_FLAGS']),
     ...mapMutations(['CHANGE_PAGINATION']),
-
-    listItems () {
-      const { allFlags, currentPage, itemsPerPage } = this
-
-      const result = []
-      const totalPage = Math.ceil(allFlags.length / itemsPerPage)
-      let count = (currentPage * itemsPerPage) - itemsPerPage
-      const delimiter = count + itemsPerPage
-
-      if (currentPage <= totalPage) {
-        for (let i = count; i < delimiter; i++) {
-          if (allFlags[i] !== null) {
-            result.push(allFlags[i])
-          }
-          count++
-        }
-      }
-      return result
-    },
-
-    totalPages () {
-      const allFlags = []
-      for (const i in this.allFlags) {
-        allFlags.push(this.allFlags[i].flag)
-        console.log(this.allFlags[i].name)
-      }
-      const total = allFlags.length / 10
-      console.log(allFlags.length)
-      return total !== Infinity ? Math.ceil(total) : 0
-    },
 
     async changeLoadingStatus () {
       this.loading = true
@@ -128,8 +195,7 @@ export default {
   /* position: fixed;
   bottom: 40px; */
   font-family: Montserrat;
-  color: #8D8D8D;
-
+  color: #8d8d8d;
 }
 
 .page {
@@ -145,7 +211,7 @@ export default {
 }
 
 div .active {
-  background-color: #6D2080 !important;
+  background-color: #6d2080 !important;
   color: #fff !important;
 }
 
@@ -170,5 +236,7 @@ div .active {
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
 }
 
-.pagination :hover:not(.active) {background-color: #ddd;}
+.pagination :hover:not(.active) {
+  background-color: #ddd;
+}
 </style>

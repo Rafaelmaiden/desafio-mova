@@ -39,6 +39,7 @@ $border-button: #6D2080;
 }
 
 .btn:hover, .btn:focus {
+  cursor: pointer !important;
   color: #fff;
   background-color: $border-button;
 }

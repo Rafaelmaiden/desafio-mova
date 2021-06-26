@@ -78,6 +78,14 @@ img {
   }
 }
 
+option {
+  font-weight: bold !important;
+}
+
+option:hover, option:active {
+  background-color: transparent !important;
+  color: #02AE99 !important;
+}
 // Css for pagination
 
 .pagination {
@@ -100,7 +108,7 @@ img {
 }
 
 div .active {
-  background-color: #6d2080 !important;
+  background-color: $default-color !important;
   color: #fff !important;
 }
 

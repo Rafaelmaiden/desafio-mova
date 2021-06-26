@@ -51,7 +51,7 @@ export default {
   padding: 100px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
   .home {
     padding: 0px 15px 0px 15px !important;
   }

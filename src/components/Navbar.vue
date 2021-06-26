@@ -21,7 +21,6 @@ $border-button: #6D2080;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 4px 4px 0px #00000040 !important;
-  /* box-shadow: 0px 0px 10px 0px #727272 !important; */
   padding: 0 67px 0 42px;
   min-height: 100px;
 }
@@ -34,7 +33,7 @@ $border-button: #6D2080;
   display: block !important;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
   .navbar {
     padding: 0 20px 0 20px;
   }

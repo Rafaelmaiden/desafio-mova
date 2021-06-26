@@ -47,9 +47,4 @@ $border-button: #6D2080;
   box-shadow: none !important;
 }
 
-/* @media screen and (max-width: 400px) {
-  .btn {
-    margin-left: auto !important;
-  }
-} */
 </style>

@@ -17,7 +17,6 @@ div label {
   margin-top: 0 !important;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
-  /* height: calc(1.5em + 0.75rem + 2px); */
   height: calc(0.7em + 0.75rem + 2px) !important;
   color: #8D8D8D !important;
 }
@@ -72,7 +71,7 @@ img {
   cursor: pointer !important;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
   .country-img, .flag {
     min-width: 100% !important;
     max-width: 100% !important;
@@ -84,8 +83,6 @@ img {
 .pagination {
   justify-content: center;
   width: 100%;
-  /* position: fixed;
-  bottom: 40px; */
   font-family: Montserrat;
   color: #8d8d8d;
 }

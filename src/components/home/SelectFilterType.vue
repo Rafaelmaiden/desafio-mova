@@ -1,6 +1,5 @@
 <template>
   <div>
-  <!-- {{ selectedFilter }} -->
     <b-form-group
       label="Filtrar por"
       label-for="select">

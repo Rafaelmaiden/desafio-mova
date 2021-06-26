@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
   .borders {
     margin-top: 0px !important;
     margin-bottom: 10px !important;

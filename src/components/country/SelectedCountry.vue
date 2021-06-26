@@ -97,7 +97,7 @@ export default {
   margin-top: 96px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 550px) {
   .flag-row {
     margin-top: 10px !important;
   }

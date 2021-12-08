@@ -2,7 +2,7 @@ import Axios from 'axios'
 import Vue from 'vue'
 
 export const api = Axios.create({
-  baseURL: 'https://restcountries.eu/rest/v2'
+  baseURL: 'https://restcountries.com/#api-endpoints-code'
 })
 
 Vue.use({
